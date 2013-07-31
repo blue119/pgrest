@@ -11,8 +11,8 @@ package "libv8-dev"
 if node['pgrest']['dev']
   include_recipe 'git'
   git "/opt/pgrest" do
-    repository "git://github.com/clkao/pgrest.git"
-    reference "master"
+    repository node['pgrest']['git-repo']
+    reference node['pgrest']['git-reference']
     action :sync
   end
   execute "install pgrest" do
