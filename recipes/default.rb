@@ -29,6 +29,17 @@ else
   end
 end
 
+execute "create plv8 extension" do
+    command "su postgres -c \"createdb kuansim; psql kuansim -c 'create extension plv8'\""
+end
+
+if node['pgrest']['sql']
+  execute "import sql" do
+    cwd "/opt/pgrest"
+    command "su postgres -c \"psql kuansim -f #{ node['pgrest']['sql'] } \""
+  end
+end
+
 # XXX: split to another recipe
 
 script "install pgextwlist" do
