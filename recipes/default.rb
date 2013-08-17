@@ -30,7 +30,9 @@ else
 end
 
 execute "create plv8 extension" do
-    command "su postgres -c \"createdb kuansim; psql kuansim -c 'create extension plv8'\""
+    command "createdb kuansim; psql kuansim -c 'create extension plv8'"
+    user 'postgres'
+    not_if 'psql -l|grep kuansim', :user => 'postgres'
 end
 
 if node['pgrest']['sql']
